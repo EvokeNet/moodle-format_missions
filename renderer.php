@@ -114,12 +114,9 @@ class format_missions_renderer extends format_section_renderer_base
         // The requested section page.
         $thissection = $modinfo->get_section_info($displaysection);
 
-        // Title with section navigation links.
-        // $sectionnavlinks = $this->get_nav_links($course, $modinfo->get_section_info_all(), $displaysection);
+        // Section title.
         $sectiontitle = '';
-        // $sectiontitle .= html_writer::start_tag('div', array('class' => 'section-navigation navigationtitle'));
-        // $sectiontitle .= html_writer::tag('span', $sectionnavlinks['previous'], array('class' => 'mdl-left'));
-        // $sectiontitle .= html_writer::tag('span', $sectionnavlinks['next'], array('class' => 'mdl-right'));
+
         // Title attributes
         $classes = 'sectionname';
         if (!$thissection->visible) {
@@ -129,33 +126,22 @@ class format_missions_renderer extends format_section_renderer_base
         $sectiontitle .= $this->output->heading($sectionname, 3, $classes);
 
         $sectiontitle .= html_writer::end_tag('div');
+
         echo $sectiontitle;
+
+        // Show completion help icon.
+        $completioninfo = new completion_info($course);
+        echo $completioninfo->display_help_icon();
 
         // Now the list of sections..
         echo $this->start_section_list();
 
         echo $this->section_header($thissection, $course, true, $displaysection);
-        // Show completion help icon.
-        $completioninfo = new completion_info($course);
-        echo $completioninfo->display_help_icon();
 
         echo $this->courserenderer->course_section_cm_list($course, $thissection, $displaysection);
         echo $this->courserenderer->course_section_add_cm_control($course, $displaysection, $displaysection);
         echo $this->section_footer();
         echo $this->end_section_list();
-
-        // Display section bottom navigation.
-        // $sectionbottomnav = '';
-        // $sectionbottomnav .= html_writer::start_tag('div', array('class' => 'section-navigation mdl-bottom'));
-        // $sectionbottomnav .= html_writer::tag('span', $sectionnavlinks['previous'], array('class' => 'mdl-left'));
-        // $sectionbottomnav .= html_writer::tag('span', $sectionnavlinks['next'], array('class' => 'mdl-right'));
-        // $sectionbottomnav .= html_writer::tag(
-        //     'div',
-        //     $this->section_nav_selection($course, $sections, $displaysection),
-        //     array('class' => 'mdl-align')
-        // );
-        // $sectionbottomnav .= html_writer::end_tag('div');
-        // echo $sectionbottomnav;
 
         // Close single-section div.
         echo html_writer::end_tag('div');

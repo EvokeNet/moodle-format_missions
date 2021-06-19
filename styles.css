@@ -1,3 +1,25 @@
 .format-missions ul li {
     list-style: none;
 }
+
+.format-missions.path-course-view .completionprogress {
+    text-align: left;
+    float: initial;
+}
+
+.format-missions .section {
+    margin-top: 2em;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.format-missions .section .activity {
+    position: relative;
+    background: #efefef;
+    margin-right: 0.5%;
+    margin-top: 0.5%;
+    flex: 0 1 24.5%;
+    padding: 2em;
+    min-height: 200px;
+}
