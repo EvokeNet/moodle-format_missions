@@ -27,7 +27,7 @@ namespace format_missions\output;
 defined('MOODLE_INTERNAL') || die();
 
 use plugin_renderer_base;
-use renderable;
+use renderer_base;
 
 /**
  * Renderer for the timeline format
@@ -35,6 +35,17 @@ use renderable;
  * @copyright  2020 onwards Willian Mano {@link https://conecti.me}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class renderer extends plugin_renderer_base
+class missions_path extends plugin_renderer_base
 {
+    public $sections;
+
+    public function __construct($sections)
+    {
+        $this->sections = $sections;
+    }
+
+    public function export_for_template()
+    {
+        return $this->render_from_template('format_missions/missions_path', $this->sections);
+    }
 }

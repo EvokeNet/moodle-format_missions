@@ -1,0 +1,15 @@
+{{!
+    @template format_missions/missions_path
+}}
+<div class="map">
+    {{#chapters}}
+        <div class="chapter">
+            <h3>Missions</h3>
+            {{#missions}}
+                <div class="mission">
+                    {{mission}}
+                </div>
+            {{/missions}}
+        </div>
+    {{/chapters}}
+</div>

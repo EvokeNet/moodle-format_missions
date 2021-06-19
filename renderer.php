@@ -1,8 +1,9 @@
 <?php
 
-defined('MOODLE_INTERNAL') || die();
 require_once($CFG->dirroot . '/course/format/renderer.php');
 require_once($CFG->dirroot . '/course/format/missions/lib.php');
+
+defined('MOODLE_INTERNAL') || die();
 
 
 /**
@@ -129,6 +130,10 @@ class format_missions_renderer extends format_section_renderer_base
 
         echo $sectiontitle;
 
+        // $sections = $this->get_sections($course, $displaysection);
+        // $missions_path_renderer = new \format_missions\output\missions_path($sections);
+        // echo $missions_path_renderer->export_for_template();
+
         // Show completion help icon.
         $completioninfo = new completion_info($course);
         echo $completioninfo->display_help_icon();
@@ -145,5 +150,24 @@ class format_missions_renderer extends format_section_renderer_base
 
         // Close single-section div.
         echo html_writer::end_tag('div');
+    }
+
+    protected function get_sections($course, $displaysection)
+    {
+        $sectionmenu = array();
+        $sectionmenu[course_get_url($course)->out(false)] = get_string('maincoursepage');
+        $modinfo = get_fast_modinfo($course);
+        $section = 1;
+        $numsections = course_get_format($course)->get_last_section_number();
+        while ($section <= $numsections) {
+            $thissection = $modinfo->get_section_info($section);
+            $showsection = $thissection->uservisible or !$course->hiddensections;
+            if (($showsection) && ($section != $displaysection) && ($url = course_get_url($course, $section))) {
+                $sectionmenu[$url->out(false)] = get_section_name($course, $section);
+            }
+            $section++;
+        }
+
+        return $sectionmenu;
     }
 }
