@@ -1,7 +1,6 @@
 <?php
 
 require_once($CFG->dirroot . '/course/format/renderer.php');
-require_once($CFG->dirroot . '/course/format/missions/lib.php');
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -25,7 +24,7 @@ class format_missions_renderer extends format_section_renderer_base
      */
     protected function start_section_list()
     {
-        return html_writer::start_tag('ul', array('class' => 'missions'));
+        return html_writer::start_tag('ul', ['class' => 'topics']);
     }
 
     /**

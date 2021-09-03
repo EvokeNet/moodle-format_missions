@@ -18,3 +18,7 @@ $string['newsectionname'] = 'New name for mission {$a}';
 $string['deletesection'] = 'Delete mission';
 
 $string['missions_outline'] = 'Missions outline';
+$string['is_sidequest'] = 'Mission is a side quest';
+$string['yes'] = 'Yes';
+$string['no'] = 'No';
+$string['is_sidequest_help'] = 'If checked, differentiates the mission point on the Mission Map block';

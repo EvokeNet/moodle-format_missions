@@ -4,7 +4,7 @@ defined('MOODLE_INTERNAL') || die();
 require_once($CFG->dirroot . '/course/format/lib.php');
 require_once($CFG->dirroot . '/course/lib.php');
 
-// use core\output\inplace_editable;
+use core\output\inplace_editable;
 
 /**
  * Main class for the Missions course format
@@ -36,8 +36,11 @@ class format_missions extends format_base
     {
         $section = $this->get_section($section);
         if ((string)$section->name !== '') {
-            // Return the name the user set.
-            return format_string($section->name, true, array('context' => context_course::instance($this->courseid)));
+            return format_string(
+                $section->name,
+                true,
+                ['context' => context_course::instance($this->courseid)]
+            );
         } else {
             return $this->get_default_section_name($section);
         }
@@ -58,6 +61,8 @@ class format_missions extends format_base
             // Return the general section.
             return get_string('section0name', 'format_missions');
         } else {
+            // Use format_base::get_default_section_name implementation which
+            // will display the section name in "Topic n" format.
             return parent::get_default_section_name($section);
         }
     }
@@ -195,8 +200,8 @@ class format_missions extends format_base
     public function get_default_blocks()
     {
         return array(
-            BLOCK_POS_LEFT => array(),
-            BLOCK_POS_RIGHT => array()
+            BLOCK_POS_LEFT => [],
+            BLOCK_POS_RIGHT => []
         );
     }
 
@@ -279,22 +284,13 @@ class format_missions extends format_base
             // The "Number of sections" option is no longer available when editing course, instead teachers should
             // delete and add sections when needed.
             $courseconfig = get_config('moodlecourse');
-            $max = (int)$courseconfig->maxsections;
+            $max = (int) $courseconfig->maxsections;
             $element = $mform->addElement('select', 'numsections', get_string('number_missions'), range(0, $max ?: 52));
             $mform->setType('numsections', PARAM_INT);
             if (is_null($mform->getElementValue('numsections'))) {
                 $mform->setDefault('numsections', $courseconfig->numsections);
             }
             array_unshift($elements, $element);
-        }
-
-        // Re-order things.
-        $mform->insertElementBefore($mform->removeElement('automaticenddate', false), 'idnumber');
-        $mform->disabledIf('enddate', 'automaticenddate', 'checked');
-        foreach ($elements as $key => $element) {
-            if ($element->getName() == 'automaticenddate') {
-                unset($elements[$key]);
-            }
         }
 
         return $elements;
@@ -378,7 +374,7 @@ class format_missions extends format_base
      */
     public function supports_news()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -399,9 +395,16 @@ class format_missions extends format_base
     {
         global $PAGE;
 
-        // Call the parent method and return the new content for .section_availability element.
+        if ($section->section && ($action === 'setmarker' || $action === 'removemarker')) {
+            // Format 'topics' allows to set and remove markers in addition to common section actions.
+            require_capability('moodle/course:setcurrentsection', context_course::instance($this->courseid));
+            course_set_marker($this->courseid, ($action === 'setmarker') ? $section->section : 0);
+            return null;
+        }
+
+        // For show/hide actions call the parent method and return the new content for .section_availability element.
         $rv = parent::section_action($section, $action, $sr);
-        $renderer = $PAGE->get_renderer('format_missions');
+        $renderer = $PAGE->get_renderer('format_topics');
         $rv['section_availability'] = $renderer->section_availability($this->get_section($section));
         return $rv;
     }
