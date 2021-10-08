@@ -8,18 +8,53 @@
 }
 
 .format-missions .section {
-    margin-top: 2em;
     display: flex;
-    justify-content: flex-start;
-    flex-wrap: wrap;
+    flex-flow: wrap;
+    justify-content: start;
+    position: relative;
+    margin: 2em 0;
+    padding: 0.3em;
 }
 
-.format-missions .section .activity {
+.format-missions .section .activity,
+.format-missions .section .activity.hasinfo,
+.format-missions .section .activity.hasinfo:last-child {
     position: relative;
-    background: #efefef;
-    margin-right: 0.5%;
-    margin-top: 0.5%;
-    flex: 0 1 24.5%;
-    padding: 2em;
+    flex: 0 0 25%;
+    margin: 0.3em;
+    border: 5px solid rgba(0, 0, 0, 1);
+    padding: 1em;
     min-height: 200px;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 00, 0, 0.6)),
+        url([[pix:format_missions|activity_bg]]);
+    background-size: cover;
+}
+
+.format-missions .section .activity a,
+.format-missions .section .activity.hasinfo a,
+.format-missions .section .activity.hasinfo:last-child a {
+    font-family: 'Bangers', monospace;
+    color: rgba(255, 255, 255, 1);
+}
+
+.format-missions .section .activity .activity-information,
+.format-missions .section .activity.hasinfo .activity-information,
+.format-missions .section .activity.hasinfo:last-child .activity-information {
+    display: none;
+}
+
+.format-missions .section .activity .activityinstance .aalink .activityicon {
+    display: block;
+    margin: 0 auto;
+}
+
+/* Smartphones */
+@media only screen and (min-width: 320px) and (max-width: 732px) {
+    .format-missions .section {
+        display: block;
+    }
 }
