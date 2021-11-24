@@ -16,6 +16,25 @@
     padding: 0.3em;
 }
 
+.format-missions #section-0 .section .activity {
+    position: relative;
+    flex: 0 0 25%;
+    margin: 0.3em;
+    border: 1px solid rgb(255, 5, 64);
+    min-height: 50px;
+    padding: 1em;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    background: rgb(255, 5, 64);
+}
+
+.format-missions #section-0 .section .activity img,
+.format-missions #section-0 .section .activity .contentafterlink {
+    display: none;
+}
+
 .format-missions .section .activity,
 .format-missions .section .activity.hasinfo,
 .format-missions .section .activity.hasinfo:last-child {
