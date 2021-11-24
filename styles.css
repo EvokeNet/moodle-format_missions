@@ -16,9 +16,13 @@
     padding: 0.3em;
 }
 
+.format-missions #section-0 .section {
+    flex-flow: row;
+}
+
 .format-missions #section-0 .section .activity {
     position: relative;
-    flex: 0 0 25%;
+    flex: 0 0 20%;
     margin: 0.3em;
     border: 1px solid rgb(255, 5, 64);
     min-height: 50px;
@@ -31,7 +35,8 @@
 }
 
 .format-missions #section-0 .section .activity img,
-.format-missions #section-0 .section .activity .contentafterlink {
+.format-missions #section-0 .section .activity .contentafterlink,
+.format-missions #section-0 .section .activity .availabilityinfo {
     display: none;
 }
 
